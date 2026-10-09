@@ -1,5 +1,7 @@
 # Priorizador de Vulnerabilidades
 
+**App online: [priorizador-vulnerabilidades.vercel.app](https://priorizador-vulnerabilidades.vercel.app/)**
+
 App web (Next.js) que lee un reporte de vulnerabilidades en **CSV, XLS o XLSX** y genera un reporte con:
 
 - **Tipo de vulnerabilidad** (RCE, inyección, credenciales, TLS, software desactualizado, configuración, etc.).
