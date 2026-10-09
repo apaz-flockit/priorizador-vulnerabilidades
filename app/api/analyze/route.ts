@@ -88,10 +88,11 @@ export async function POST(req: Request) {
   }));
   if (!vulns.length) return NextResponse.json({ error: "No hay vulnerabilidades para analizar." }, { status: 400 });
 
-  const client = new Anthropic({ apiKey, timeout: 50_000, maxRetries: 0 });
+  const client = new Anthropic({ apiKey, timeout: 45_000, maxRetries: 0 });
+  const t0 = Date.now();
   try {
     const msg = await client.messages.create({
-      model: process.env.ANTHROPIC_MODEL || "claude-sonnet-4-5",
+      model: process.env.ANTHROPIC_MODEL || "claude-haiku-4-5",
       max_tokens: 3500,
       system:
         "Sos un analista senior de ciberseguridad. Recibís vulnerabilidades ya clasificadas por un motor de reglas " +
@@ -111,6 +112,7 @@ export async function POST(req: Request) {
         },
       ],
     });
+    console.log(`[analyze] ${Date.now() - t0} ms, ${vulns.length} vulns, ${msg.usage.output_tokens} tokens de salida`);
     const block = msg.content.find((b) => b.type === "tool_use");
     if (!block || block.type !== "tool_use") throw new Error("La IA no devolvió un resultado estructurado.");
     return NextResponse.json(block.input);

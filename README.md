@@ -12,6 +12,14 @@ App web (Next.js) que lee un reporte de vulnerabilidades en **CSV, XLS o XLSX** 
 - **Análisis con IA (opcional)**: Claude redacta el impacto de negocio, la recomendación de cada vulnerabilidad y un resumen ejecutivo.
 - **Descarga en PDF** del informe.
 
+## Probar la app
+
+1. Abrí https://priorizador-vulnerabilidades.vercel.app/
+2. Hacé clic en **"Probar con un ejemplo"** (o subí tu propio CSV, XLS o XLSX).
+3. Para el análisis con IA, hacé clic en **"Analizar impacto con IA"** e ingresá el código de acceso de la demo: **`IAday`**
+
+Sin el código podés usar todo lo demás (clasificación, priorización, plan de remediación y PDF); el código solo habilita el análisis con IA.
+
 ## Cómo funciona
 
 1. El archivo se lee **en el navegador** (no se sube a ningún servidor).
@@ -51,7 +59,7 @@ Otros comandos:
 | Variable | Obligatoria | Descripción |
 |---|---|---|
 | `ANTHROPIC_API_KEY` | No | Clave de https://console.anthropic.com. Sin ella la app funciona solo con reglas. |
-| `ANTHROPIC_MODEL` | No | Modelo de Claude (por defecto `claude-sonnet-4-5`). |
+| `ANTHROPIC_MODEL` | No | Modelo de Claude (por defecto `claude-haiku-4-5`, más rápido; con `claude-sonnet-4-5` el análisis es más detallado pero puede tardar más). |
 | `ACCESS_CODE` | No | Si la definís, el análisis con IA pide este código. Recomendado si la app es pública, para que nadie más gaste tu clave. |
 
 ## Despliegue
