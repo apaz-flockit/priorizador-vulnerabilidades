@@ -57,7 +57,7 @@ export default function Dashboard({ result, ai, setAi, config, onReset }: Props)
     }
     setAiLoading(true);
     try {
-      const top = result.groups.filter((g) => g.severity !== "Informativa").slice(0, 30);
+      const top = result.groups.filter((g) => g.severity !== "Informativa").slice(0, 15);
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json", ...(code ? { "x-access-code": code } : {}) },
@@ -84,9 +84,20 @@ export default function Dashboard({ result, ai, setAi, config, onReset }: Props)
           },
         }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? `Error ${res.status}`);
-      setAi(data as AiResult);
+      const text = await res.text();
+      let data: (AiResult & { error?: string }) | null = null;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        // El servidor no devolvió JSON (típico de un corte por tiempo en Vercel)
+        throw new Error(
+          res.status === 504 || /timeout|timed out/i.test(text)
+            ? "El análisis tardó demasiado y el servidor lo cortó. Probá de nuevo."
+            : `El servidor devolvió una respuesta inesperada (${res.status}). Probá de nuevo en unos segundos.`,
+        );
+      }
+      if (!res.ok || !data) throw new Error(data?.error ?? `Error ${res.status}`);
+      setAi(data);
     } catch (e) {
       setAiError((e as Error).message);
     } finally {
