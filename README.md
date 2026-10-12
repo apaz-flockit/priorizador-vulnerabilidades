@@ -16,7 +16,7 @@ App web (Next.js) que lee un reporte de vulnerabilidades en **CSV, XLS o XLSX** 
 
 1. Abrí https://priorizador-vulnerabilidades.vercel.app/
 2. Hacé clic en **"Probar con un ejemplo"** (o subí tu propio CSV, XLS o XLSX).
-3. Para el análisis con IA, hacé clic en **"Analizar impacto con IA"** e ingresá el código de acceso de la demo: **`IAday`**
+3. Para el análisis con IA, hacé clic en **"Analizar impacto con IA"**. Pide un código de acceso: si querés probarlo, solicitáselo a Alberto Paz (alberto.paz@flockit.com.ar).
 
 Sin el código podés usar todo lo demás (clasificación, priorización, plan de remediación y PDF); el código solo habilita el análisis con IA.
 
